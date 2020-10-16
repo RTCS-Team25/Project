@@ -11,6 +11,12 @@ This project is a **mental health robot**, which draws on **the speech recogniti
 ## Aims
 
 1. Allow Pepper to recognize a variety of phrases which the user may use in order to prompt an appropriate response.
+   1. size: 5
+   2. human ask, pepper response
+   3. Phrase:
+      1. hello? (hello)
+      2. I had a bad day. (That's OK, can I help you?)
+      3. Yes (have some motivation
 2. Create a library of responses to allow Pepper to maintain a ‘conversation’ with the user.
 3. (Advanced) Use both the speech function as well as the tablet screen to take the user through a guided meditation or provide a happy distraction in the form of pictures, symbols or animations.
 
