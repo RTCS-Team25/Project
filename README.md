@@ -55,8 +55,8 @@ This project is a **mental health robot**, which draws on **the speech recogniti
 
 ## Roles
 
-- Conversation & Interaction Design: Maia
-- Code Implementation: Mark, Malik
-- Additional Functions (Tablet): Chang
-- Code Review, Project Management: Zhuheng
-- Test & Debug, Code Refactor: Shuailin
+- Conversation & Interaction Design: **Maia**
+- Code Implementation: **Mark**, **Malik**
+- Additional Functions (Tablet): **Chang**
+- Code Review, Project Management: **Zhuheng**
+- Test & Debug, Code Refactor: **Shuailin**
