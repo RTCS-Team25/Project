@@ -11,12 +11,11 @@ This project is a **mental health robot**, which draws on **the speech recogniti
 ## Aims
 
 1. Allow Pepper to recognize a variety of phrases which the user may use in order to prompt an appropriate response.
-   1. size: 5
-   2. human ask, pepper response
-   3. Phrase:
+   1. **human ask, pepper response**
+   2. Phrase:
       1. hello? (hello)
       2. I had a bad day. (That's OK, can I help you?)
-      3. Yes (have some motivation
+      3. Yes (Relax!)
 2. Create a library of responses to allow Pepper to maintain a ‘conversation’ with the user.
 3. (Advanced) Use both the speech function as well as the tablet screen to take the user through a guided meditation or provide a happy distraction in the form of pictures, symbols or animations.
 
@@ -53,3 +52,11 @@ This project is a **mental health robot**, which draws on **the speech recogniti
 - [A Demo: Say ‘Hello, you’ every time pepper detects a human face](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/python-sdk-tutorials/reacting-events#python-reacting-to-events)
 - [Python SDK - Examples](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/python-sdk-tutorials/python-sdk-examples)
 - [Parallel Tasks: move and speak at the same time.](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/python-sdk-tutorials/parallel-tasks-making#-making-nao-move-and-speak-at-the-same-time--sbr-fake-anchor)
+
+## Roles
+
+- Conversation & Interaction Design: Maia
+- Code Implementation: Mark, Malik
+- Additional Functions (Tablet): Chang
+- Code Review, Project Management: Zhuheng
+- Test & Debug, Code Refactor: Shuailin
