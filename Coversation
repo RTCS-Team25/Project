@@ -1,0 +1,33 @@
+from naoqi import ALProxy
+import time
+
+def conversation(): #test code - pepper repeats word back to user
+    IP = "whatever the IP is"
+    tts = ALProxy("ALTextToSpeech", IP, 9559) # initiates text to speech functionality
+    asr = ALProxy("ALSpeechRecognition", IP, 9559) # initiates speech recognition functionality
+    memory = ALProxy("ALMemory")
+
+    asr.setlanguage("English") 
+    vocab = ["good", "bad"] 
+    asr.setVocabulary(vocab, False) # sets what pepper understands
+
+    asr.subscribe("Test_ASR") # pepper listens
+    time.sleep(20)
+    asr.unsubscribe("Test_ASR")
+
+    #guess as to get data:
+    heard = memory.getData("WordRecognized") # retrieve list of understood phrases from ALMemory (maybe???)
+    tts.say("You said")
+    tts.say(heard[0]) # repeat first word said back to user
+
+    #words understood go in WordRecognized key stored in ALMemory - how to access? Idea above
+
+    #idea for sorting responses:
+    """
+    positive = ["good", "great", "not bad"]
+    negative = ["bad", "sad"]
+    if heard[0] in positive:
+        tts.say("That's good")
+    elif heard[0] in negative:
+        tts.say("I'm sorry to hear that")
+    """
