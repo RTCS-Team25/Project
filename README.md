@@ -29,29 +29,45 @@ This project is a **mental health robot**, which draws on **the speech recogniti
 
 ## References
 
-- [NAOqi OS](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/working-naoqi/naoqi-os): the operating system of the robot, an embedded GNU/Linux distribution based on Gentoo.
-- [NAOqi](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/working-naoqi/naoqi): main software running on the robot.
-- [NAOqi Framework Key Concepts](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/former-naoqi-framework/key-concepts): the programming framework used to program Aldebaran robots.
-- qi Framework (do not know what this is 😅)
+### Key Concepts
+
+- [**NAOqi OS**](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/working-naoqi/naoqi-os): the operating system of the robot, an embedded GNU/Linux distribution based on Gentoo.
+- [**NAOqi**](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/working-naoqi/naoqi): main software running on the robot.
+- [**NAOqi Framework**](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/former-naoqi-framework/key-concepts): the programming framework used to program Aldebaran robots.
+- **qi Framework** (do not know what this is 😅)
   - [How to switch from NAOqi to qi Framework](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/qi-framework/hands-guide/how-switch-naoqi-qi-framework)
   - [Python - How to write a qimessaging client](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/qi-framework/hands-guide/python-how-write-qimessaging-client)
   - [Using qicli commands](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/qi-framework/hands-guide/using-qicli-commands)
-- [NAOqi APIs](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/naoqi-apis)
-- [Living Robot](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/programming-living-robot): He will naturally do things by himself without the need for you to implement or manage every aspect of his life.
+- [**Living Robot**](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/programming-living-robot): He will naturally do things by himself without the need for you to implement or manage every aspect of his life.
 
----
+- [**DCM**](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/naoqi-apis/dcm#-how-it-works--sbr-fake-anchor): The DCM is the link between the “upper level” software (others naoqi modules) and the “lower level” software (soft in electronic boards).
 
-- [DCM-How It Works](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/naoqi-apis/dcm#-how-it-works--sbr-fake-anchor). The DCM is the link between the “upper level” software (others naoqi modules) and the “lower level” software (soft in electronic boards).
+### [NAOqi APIs](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/naoqi-apis)
 
----
+#### Event
 
+- [NAOqi Event List](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/former-naoqi-framework/naoqi-event-index)
+- subscribe to an event
+  - [with NAOqi](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/naoqi-apis/naoqi-core/almemory/almemory-tutorial#-using-naoqi--sbr-fake-anchor): 👎 need be a module to subscribe to a memory event
+  - [with qi](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/qi-framework/hands-guide/how-switch-naoqi-qi-framework#-subscribe-to-a-memory-event--sbr-fake-anchor): 👍 just have to specify a callback
+  - [Example: reacting to event](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/python-sdk-tutorials/reacting-events)
+
+#### Memory
+
+- [NAOqi Memory Key List](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/former-naoqi-framework/naoqi-memory-key-index)
+- [AlMemory-Tutorial](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/naoqi-apis/naoqi-core/almemory/almemory-tutorial)
+
+#### Speech
+
+- [ALSpeechRecognition Tutorial](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/naoqi-apis/naoqi-audio/alspeechrecognition-1#alspeechrecognition-tuto)
 - [Supported Languages](https://developer.softbankrobotics.com/pepper-naoqi-25/pepper-documentation/pepper-developer-guide/supported-languages)
 
----
+### Related Examples
 
 - [A Demo: Say ‘Hello, you’ every time pepper detects a human face](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/python-sdk-tutorials/reacting-events#python-reacting-to-events)
 - [Python SDK - Examples](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/python-sdk-tutorials/python-sdk-examples)
 - [Parallel Tasks: move and speak at the same time.](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/other-tutorials/python-sdk-tutorials/parallel-tasks-making#-making-nao-move-and-speak-at-the-same-time--sbr-fake-anchor)
+- [ALSpeechRecognition Tutorial](https://developer.softbankrobotics.com/pepper-naoqi-25/naoqi-developer-guide/naoqi-apis/naoqi-audio/alspeechrecognition-1#alspeechrecognition-tuto): This tutorial explains how to recognize words from vocabulary using the embedded speech recognition.
 
 ## Roles
 
