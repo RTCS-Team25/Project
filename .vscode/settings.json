@@ -1,0 +1,17 @@
+{
+    "git.autofetch": true,
+    "python.pythonPath": "/usr/bin/python2",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pycodestyleEnabled": true,
+    "python.linting.pycodestyleArgs": [
+        "--max-line-length=120",
+        "--ignore=E402"
+    ],
+    "python.formatting.autopep8Args": [
+        "--max-line-length=120"
+    ],
+    "cSpell.words": [
+        "naoqi"
+    ],
+}
