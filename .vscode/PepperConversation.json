@@ -100,4 +100,6 @@
 }
 #ask what their name is? Use their name in the response
 #label each state that the user may find themselves in 
+#neutral responses will count as negative responses e.g. "ok" from the user
+
 
