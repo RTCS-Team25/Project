@@ -24,7 +24,7 @@ def fsm():
     memory = ALProxy("ALMemory", IP, 9559)
 
     asr.setLanguage("English")
-    vocab = ["good", "bad", "quit"]
+    vocab = ["good", "bad", "quit"]     # temporary vocab list - will be changed for script
     asr.pause(0)  # pause the ASR engine to be able to call `setVocabulary()`
     asr.setVocabulary(vocab, False)  # sets what pepper understands
     asr.pause(1)  # restart the ASR engine
@@ -39,15 +39,14 @@ def fsm():
 
     while True:
         tts.say(script[state]['content'])
-        time.sleep(5)
+        time.sleep(5)           # delay to allow user time to reply
         response = memory.getData("WordRecognized") # retrieve response
-        feedback = is_positive(response[-2])
+        feedback = is_positive(response[-2])    # sort response
         if feedback == -1: #Detect if the user says 'quit'
             break           #Break from loop
         state = script[state]['next'][feedback]  # switch state of conversation
 
-
-
-
-
     asr.unsubscribe("nao") # end listening
+
+if __name__ == "__main__":
+    fsm()
