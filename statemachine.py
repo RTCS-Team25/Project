@@ -2,17 +2,16 @@ import time
 from naoqi import ALProxy
 import jstyleson
 
-def is_positive():
-    response = memory.getData("WordRecognized") # retrieve response
-    
+def is_positive(word):
+       
     # sorting responses
     positive = ["good", "great", "not bad"]     #temporary
     negative = ["bad", "sad"]                   #temporary
-    if reponse[-2] in positive:
+    if word in positive:
         return 0                # return appropriate index for next state
-    elif response[-2] in negative:
+    elif word in negative:
         return 1
-    elif respose[-2] == 'quit':
+    elif word == 'quit':
         return -1            # exit condition
 
 def fsm():
@@ -25,7 +24,7 @@ def fsm():
     memory = ALProxy("ALMemory", IP, 9559)
 
     asr.setLanguage("English")
-    vocab = ["good", "bad", "quit"]         # temporary vocab list - will be adapted foro script
+    vocab = ["good", "bad", "quit"]
     asr.pause(0)  # pause the ASR engine to be able to call `setVocabulary()`
     asr.setVocabulary(vocab, False)  # sets what pepper understands
     asr.pause(1)  # restart the ASR engine
@@ -37,5 +36,18 @@ def fsm():
 
     # start the speech recognition engine with user nao
     asr.subscribe("nao")  # pepper start to listens, eyes turns blue
+
+    while True:
+        tts.say(script[state]['content'])
+        time.sleep(5)
+        response = memory.getData("WordRecognized") # retrieve response
+        feedback = is_positive(response[-2])
+        if feedback == -1: #Detect if the user says 'quit'
+            break           #Break from loop
+        state = script[state]['next'][feedback]  # switch state of conversation
+
+
+
+
 
     asr.unsubscribe("nao") # end listening
