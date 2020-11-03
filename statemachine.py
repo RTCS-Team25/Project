@@ -5,8 +5,8 @@ import jstyleson
 def is_positive(word):
        
     # sorting responses
-    positive = ["good", "great", "not bad"]     #temporary
-    negative = ["bad", "sad"]                   #temporary
+    positive = ["good", "great", "yes", "okay"]     # can be expanded
+    negative = ["bad", "sad", "no"]                   
     if word in positive:
         return 0                # return appropriate index for next state
     elif word in negative:
@@ -24,7 +24,7 @@ def fsm():
     memory = ALProxy("ALMemory", IP, 9559)
 
     asr.setLanguage("English")
-    vocab = ["good", "bad", "quit"]     # temporary vocab list - will be changed for script
+    vocab = ["yes", "no", "good", "great", "sad", "bad", "okay", "quit"]     # can be expanded as needed
     asr.pause(0)  # pause the ASR engine to be able to call `setVocabulary()`
     asr.setVocabulary(vocab, False)  # sets what pepper understands
     asr.pause(1)  # restart the ASR engine
@@ -46,7 +46,7 @@ def fsm():
             break           #Break from loop
         state = script[state]['next'][feedback]  # switch state of conversation
 
-tts.say('Goodbye!')
+    tts.say('Goodbye!')
     asr.unsubscribe("nao") # end listening
 
 if __name__ == "__main__":
