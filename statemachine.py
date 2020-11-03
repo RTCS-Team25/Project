@@ -46,6 +46,7 @@ def fsm():
             break           #Break from loop
         state = script[state]['next'][feedback]  # switch state of conversation
 
+tts.say('Goodbye!')
     asr.unsubscribe("nao") # end listening
 
 if __name__ == "__main__":
