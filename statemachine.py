@@ -24,7 +24,7 @@ def fsm():
     memory = ALProxy("ALMemory", IP, 9559)
 
     asr.setLanguage("English")
-    vocab = ["hi", "hello", "yes", "no", "good", "great", "sad", "bad", "okay", "quit"]     # can be expanded as needed
+    vocab = positive + negative
     asr.pause(0)  # pause the ASR engine to be able to call `setVocabulary()`
     asr.setVocabulary(vocab, False)  # sets what pepper understands
     asr.pause(1)  # restart the ASR engine
@@ -46,7 +46,7 @@ def fsm():
             break           #Break from loop
         try:
             state = script[state]['next'][feedback]  # switch state of conversation
-        except:                                 # unsure of specific error which will be thrown - should be added
+        except IndexError:
             state = script[state]['next'][0]    # for if only one state listed in "next"
 
     tts.say('Goodbye!')
