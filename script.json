@@ -1,0 +1,107 @@
+{
+    "1": { // id of sentence
+        "content": "Hi",
+        "next": [ // id of next sentence based on conditions
+            "2", // if greeted
+        ]
+    },
+    "2": {
+        "content": "Hello, how are you?",
+        "next": [
+            "3", //if response_positive
+            "4", //if response_negative or neutral, neutral == 'ok'
+            "97" //if response not detected properly- repeat this a max of 3 times before terminating
+        ]
+    },
+    "3": {
+        "content": "Yay I am happy to hear that",
+        "next": [
+            "99",
+        ]
+    },
+    "4": {
+        "content": "I'm sorry to hear that, Can I help you feel better?",
+        "next": [
+            "5",
+            "99",
+            "97",
+        ]
+    },
+    "5": {
+        "content": "Would you like to try some meditation with me?",
+        "next": [
+            "6",
+            "99",
+            "97",
+        ]
+    },
+    "6": {
+        "content": "Great, let's get started. Take a deep breath in and as you breathe out, look at my tablet",
+        "next": [
+            "7",
+            "99",
+            "97",
+        ]
+    },
+    "7": {
+        "content": "Now, breathe in for 5 seconds. 1     2     3     4     5. And breathe out for five.  1     2     3     4     5",
+        "next": [
+            "8",
+        ]
+    },
+    "8": {
+        "content": "Good job, how did you find that?",
+        "next": [
+            "9",
+            "98",
+            "97",
+        ]
+    },
+    "9": {
+        "content": "Do you want to breathe again?",
+        "next": [
+            "6",
+            "99",
+            "97",
+        ]
+    },
+    "n-2": {
+        "content": "Can you tell me more?",
+        "next": [
+            "3",
+            "4",
+            "97",
+        ]
+    },
+    "97": {
+        "content": "I'm sorry I didn't get that, could you repeat?",
+        "next": [
+            "3",
+            "4",
+            "97",
+        ]
+    },
+    "98": {
+        "content": "Hopefully this has brought some calm to your day",
+        "next": [
+            "99",
+        ]
+    },
+    "99": {
+        "content": "Ok, have a nice day, take care of yourself.",
+        "next": [
+            "-1"
+        ]
+    },
+    "-1": {
+        "content": "Goodbye!",
+        "next": [
+            "-1"
+        ]
+    }
+}
+//ask what their name is? Use their name in the response
+//label each state that the user may find themselves in
+//neutral responses will count as negative responses e.g. "ok" from the user
+
+
