@@ -2,11 +2,9 @@ import time
 from naoqi import ALProxy
 import jstyleson
 
-def is_positive(word):
+def is_positive(word, positive, negative):
        
-    # sorting responses
-    positive = ["good", "great", "yes", "okay", "hello", "hi"]     # can be expanded
-    negative = ["bad", "sad", "no"]                   
+    # sorting responses                  
     if word in positive:
         return 0                # return appropriate index for next state
     elif word in negative:
@@ -24,7 +22,11 @@ def fsm():
     memory = ALProxy("ALMemory", IP, 9559)
 
     asr.setLanguage("English")
+
+    positive = ["good", "great", "yes", "okay", "hello", "hi"]     # can be expanded
+    negative = ["bad", "sad", "no"]   
     vocab = positive + negative
+
     asr.pause(0)  # pause the ASR engine to be able to call `setVocabulary()`
     asr.setVocabulary(vocab, False)  # sets what pepper understands
     asr.pause(1)  # restart the ASR engine
@@ -41,7 +43,7 @@ def fsm():
         tts.say(script[state]['content'])
         time.sleep(5)           # delay to allow user time to reply
         response = memory.getData("WordRecognized") # retrieve response
-        feedback = is_positive(response[-2])    # sort response
+        feedback = is_positive(response[-2], positive, negative)    # sort response
         if feedback == -1: #Detect if the user says 'quit'
             break           #Break from loop
         try:
