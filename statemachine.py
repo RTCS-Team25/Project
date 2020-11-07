@@ -21,6 +21,7 @@ def fsm():
     tts = ALProxy("ALTextToSpeech", IP, 9559)  # initiates text to speech functionality
     asr = ALProxy("ALSpeechRecognition", IP, 9559)  # initiates speech recognition functionality
     memory = ALProxy("ALMemory", IP, 9559)
+    tablet = ALProxy("ALTabletService", IP, 9559)  # initialise tablet functionality
 
     asr.setLanguage("English")
 
@@ -32,6 +33,10 @@ def fsm():
     asr.setVocabulary(vocab, False)  # sets what pepper understands
     asr.pause(1)  # restart the ASR engine
 
+    #tablet initialisation 
+    url = "url of gif"      # url of the gif, I have uploaded gif to be used to the github repo
+    tablet.preLoadImage(url)
+    
     with open('./script.json') as f:    # load script from the file
         script = jstyleson.load(f)
 
@@ -41,18 +46,28 @@ def fsm():
     asr.subscribe("nao")  # pepper start to listens, eyes turns blue
 
     while True:
+        if state == '6':            # start gif at start of breathing exercise
+            tablet.showImage(url)
+        elif state == '8':          # stop gif at end of breathing
+            tablet.hideImage(url)
+
         tts.say(script[state]['content'].encode('ascii', 'ignore'))  # convert from unicode to ascii for compatibility
         time.sleep(5)           # delay to allow user time to reply
+        
         response = memory.getData("WordRecognized")  # retrieve response
         print('response: ' + str(response) + '\n')
         print('state: ' + state)
+        
         feedback = is_positive(response[-2], positive, negative)    # sort response
+        
         if feedback == -1 or state == '-1':  # Detect if the user says 'quit'
             break  # Break from loop
         try:
             state = script[state]['next'][feedback]  # switch state of conversation
         except IndexError:
             state = script[state]['next'][0]    # for if only one state listed in "next"
+
+        previousResponse = response         # save the previous entry, could be useful for detecting if user has not responded
 
     asr.unsubscribe("nao")  # end listening
 
