@@ -67,7 +67,7 @@ def fsm():
         except IndexError:
             state = script[state]['next'][0]    # for if only one state listed in "next"
 
-        previousResponse = response         # save the previous entry, could be useful for detecting if user has not responded
+        previousResponse = response[:]         # save the previous entry, could be useful for detecting if user has not responded
 
     asr.unsubscribe("nao")  # end listening
 
