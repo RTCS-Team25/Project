@@ -58,16 +58,18 @@ def fsm():
         print('response: ' + str(response) + '\n')
         print('state: ' + state)
         
-        feedback = is_positive(response[-2], positive, negative)    # sort response
+        if response[-1] < 0.5:          # if pepper is not confident
+            tts.say("Sorry, I didn't quite catch that")     # ask to repeat, dont change state
         
-        if feedback == -1 or state == '-1':  # Detect if the user says 'quit'
-            break  # Break from loop
-        try:
-            state = script[state]['next'][feedback]  # switch state of conversation
-        except IndexError:
-            state = script[state]['next'][0]    # for if only one state listed in "next"
-
-        previousResponse = response[:]         # save the previous entry, could be useful for detecting if user has not responded
+        else:                           # if pepper is confident in correct response, change state accordingly
+            feedback = is_positive(response[-2], positive, negative)    # sort response
+        
+            if feedback == -1 or state == '-1':  # Detect if the user says 'quit'
+                break  # Break from loop
+            try:
+                state = script[state]['next'][feedback]  # switch state of conversation
+            except IndexError:
+                state = script[state]['next'][0]    # for if only one state listed in "next"
 
     asr.unsubscribe("nao")  # end listening
 
