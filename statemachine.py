@@ -58,18 +58,22 @@ def fsm():
         print('response: ' + str(response) + '\n')
         print('state: ' + state)
         
-        if response[-1] < 0.5:          # if pepper is not confident
+        while response[-1] < 0.5:          # if pepper is not confident
             tts.say("Sorry, I didn't quite catch that")     # ask to repeat, dont change state
+            time.sleep(5)                                   # wait another 5 seconds for response
+            response = memory.getData("WordRecognized")     # retrieve response again
+            print('response: ' + str(response) + '\n')
+            print('state: ' + state)
         
-        else:                           # if pepper is confident in correct response, change state accordingly
-            feedback = is_positive(response[-2], positive, negative)    # sort response
+        # once pepper is confident in correct response, change state accordingly
+        feedback = is_positive(response[-2], positive, negative)    # sort response
         
-            if feedback == -1 or state == '-1':  # Detect if the user says 'quit'
-                break  # Break from loop
-            try:
-                state = script[state]['next'][feedback]  # switch state of conversation
-            except IndexError:
-                state = script[state]['next'][0]    # for if only one state listed in "next"
+        if feedback == -1 or state == '-1':  # Detect if the user says 'quit'
+            break  # Break from loop
+        try:
+            state = script[state]['next'][feedback]  # switch state of conversation
+        except IndexError:
+            state = script[state]['next'][0]    # for if only one state listed in "next"
 
     asr.unsubscribe("nao")  # end listening
 
