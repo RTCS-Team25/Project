@@ -10,7 +10,7 @@ def is_positive(word, positive, negative):
     elif word in negative:
         return 1
     elif word == 'quit':
-        return -1            # exit condition
+        return -1               # exit condition
 
 
 def fsm():
@@ -18,16 +18,17 @@ def fsm():
     conversation fsm
     '''
     IP = "pepper.local"  # use the alias for pepper's IP
-    tts = ALProxy("ALTextToSpeech", IP, 9559)  # initiates text to speech functionality
+    tts = ALProxy("ALTextToSpeech", IP, 9559)       # initiates text to speech functionality
     asr = ALProxy("ALSpeechRecognition", IP, 9559)  # initiates speech recognition functionality
     memory = ALProxy("ALMemory", IP, 9559)
-    tablet = ALProxy("ALTabletService", IP, 9559)  # initialise tablet functionality
+    tablet = ALProxy("ALTabletService", IP, 9559)   # initialise tablet functionality
 
     asr.setLanguage("English")
 
     positive = ["good", "great", "yes", "okay", "hello", "hi"]  # can be expanded
-    negative = ["bad", "sad", "no"]  # can be expanded
-    vocab = positive + negative
+    negative = ["bad", "sad", "no"]                             # can be expanded
+    exit_command = ["quit"]                                     # command pepper understands to exit the program
+    vocab = positive + negative + exit_command
 
     asr.pause(0)  # pause the ASR engine to be able to call `setVocabulary()`
     asr.setVocabulary(vocab, False)  # sets what pepper understands
@@ -37,7 +38,7 @@ def fsm():
     url = "url of gif"      # url of the gif, I have uploaded gif to be used to the github repo
     tablet.preLoadImage(url)
     
-    with open('./script.json') as f:    # load script from the file
+    with open('./PepperConversation.json') as f:    # load script from the file
         script = jstyleson.load(f)
 
     state = '1'
@@ -46,23 +47,27 @@ def fsm():
     asr.subscribe("nao")  # pepper start to listens, eyes turns blue
 
     while True:
-        if state == '6':            # start gif at start of breathing exercise
-            tablet.showImage(url)
-        elif state == '8':          # stop gif at end of breathing
-            tablet.hideImage(url)
 
         tts.say(script[state]['content'].encode('ascii', 'ignore'))  # convert from unicode to ascii for compatibility
 
-        if state == '99':       # exit after saying "Goodbye" at final state
+        # state specific operations
+        if state == '99':           # exit after saying "Goodbye" at final state
             break
+        elif state == '6':          # start of meditation
+            tablet.showImage(url)   # start gif at start of breathing meditation
+            time.sleep(10)          # user follows breathing gif for 10 seconds
+            state = '7'             # move to next state (only one outcome from meditation)
+            continue                # execute loop for state 7, no response needed from user
+        elif state == '7':
+            tablet.hideImage(url)   # hide gif at end of breathing meditation
 
-        time.sleep(5)           # delay to allow user time to reply
+        time.sleep(5)               # delay to allow user time to reply
         
-        response = memory.getData("WordRecognized")  # retrieve response
+        response = memory.getData("WordRecognized")         # retrieve response
         print('response: ' + str(response) + '\n')
         print('state: ' + state)
         
-        while response[-1] < 0.5:          # if pepper is not confident
+        while response[-1] < 0.5 or response == []:         # if pepper is not confident or nothing has been said
             tts.say("Sorry, I didn't quite catch that")     # ask to repeat, dont change state
             time.sleep(5)                                   # wait another 5 seconds for response
             response = memory.getData("WordRecognized")     # retrieve response again
