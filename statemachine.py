@@ -52,6 +52,10 @@ def fsm():
             tablet.hideImage(url)
 
         tts.say(script[state]['content'].encode('ascii', 'ignore'))  # convert from unicode to ascii for compatibility
+
+        if state == '99':       # exit after saying "Goodbye" at final state
+            break
+
         time.sleep(5)           # delay to allow user time to reply
         
         response = memory.getData("WordRecognized")  # retrieve response
