@@ -1,8 +1,7 @@
-
 {
-    "1": {  // id of sentence
+    "1": { // id of sentence
         "content": "Hi",
-        "next": [  // id of next sentence based on conditions
+        "next": [ // id of next sentence based on conditions
             "2", // if greeted
         ]
     },
@@ -11,61 +10,62 @@
         "next": [
             "3", //if response_positive
             "4", //if response_negative or neutral, neutral == 'ok'
-           
         ]
     },
-     "3": {
+    "3": {
         "content": "Yay I am happy to hear that",
         "next": [
             "99",
-            
         ]
     },
     "4": {
         "content": "I'm sorry to hear that, Can I help you feel better?",
         "next": [
-            "5", 
+            "5",
             "99",
         ]
     },
-     "5": {
+    "5": {
         "content": "Would you like to try some meditation with me?",
         "next": [
-             "6", // positive response or NO response
+            "6", // positive response or NO response
             "99", // negative response. I.e. default to case 6 unless negative response
         ]
     },
-     "6": {
+    "6": {
         "content": "Great, let's get started. Take a deep breath in and as you breathe out, look at the screen. Following the display on the screen, breathe in deeply and then breathe out",
         "next": [
-             "7", 
+            "7",
             "99",
         ]
-     },
-     "7": {
+    },
+    "7": {
         "content": "Good job, how did you find that?",
         "next": [
-             "8", 
-             "98",
-          
+            "8",
+            "98",
         ]
-     },
-     "8": {
+    },
+    "8": {
         "content": "Do you want to meditate again?",
         "next": [
-             "6", 
-             "99",
+            "6",
+            "99",
         ]
-     },
+    },
     "98": {
         "content": "Hopefully this has brought some calm to your day",
         "next": [
-             "99",
-          
+            "99",
         ]
-     },
+    },
     "99": {
         "content": "Ok, have a nice day, take care of yourself.",
-        
     },
+    "-1": {
+        "content": "Goodbye!",
+        "next": [
+            "-1"
+        ]
+    }
 }
