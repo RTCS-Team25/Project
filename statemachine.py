@@ -1,4 +1,5 @@
 import time
+import os
 from naoqi import ALProxy
 import jstyleson
 
@@ -34,11 +35,11 @@ def fsm():
     asr.setVocabulary(vocab, False)  # sets what pepper understands
     asr.pause(1)  # restart the ASR engine
 
-    #tablet initialisation 
-    url = "url of gif"      # url of the gif, I have uploaded gif to be used to the github repo
+    # tablet initialisation
+    url = os.uname()[1] + ":8000/breathe.gif"      # url of the gif
     tablet.preLoadImage(url)
-    
-    with open('./PepperConversation.json') as f:    # load script from the file
+
+    with open('./script.json') as f:    # load script from the file
         script = jstyleson.load(f)
 
     state = '1'
@@ -62,21 +63,21 @@ def fsm():
             tablet.hideImage(url)   # hide gif at end of breathing meditation
 
         time.sleep(5)               # delay to allow user time to reply
-        
+
         response = memory.getData("WordRecognized")         # retrieve response
         print('response: ' + str(response) + '\n')
         print('state: ' + state)
-        
+
         while response[-1] < 0.5 or response == []:         # if pepper is not confident or nothing has been said
             tts.say("Sorry, I didn't quite catch that")     # ask to repeat, dont change state
             time.sleep(5)                                   # wait another 5 seconds for response
             response = memory.getData("WordRecognized")     # retrieve response again
             print('response: ' + str(response) + '\n')
             print('state: ' + state)
-        
+
         # once pepper is confident in correct response, change state accordingly
         feedback = is_positive(response[-2], positive, negative)    # sort response
-        
+
         if feedback == -1 or state == '-1':  # Detect if the user says 'quit'
             break  # Break from loop
         try:
