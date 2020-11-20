@@ -22,22 +22,17 @@ def fsm():
     tts = ALProxy("ALTextToSpeech", IP, 9559)       # initiates text to speech functionality
     asr = ALProxy("ALSpeechRecognition", IP, 9559)  # initiates speech recognition functionality
     memory = ALProxy("ALMemory", IP, 9559)
-    tablet = ALProxy("ALTabletService", IP, 9559)   # initialise tablet functionality
 
     asr.setLanguage("English")
 
-    positive = ["good", "great", "yes", "okay", "hello", "hi"]  # can be expanded
-    negative = ["bad", "sad", "no"]                             # can be expanded
+    positive = ["good", "great", "yes", "okay", "hello", "hi", "of course", 'happy', 'thank you']  # can be expanded
+    negative = ["bad", "sad", "no", 'terrible']                             # can be expanded
     exit_command = ["quit"]                                     # command pepper understands to exit the program
     vocab = positive + negative + exit_command
 
     asr.pause(0)  # pause the ASR engine to be able to call `setVocabulary()`
     asr.setVocabulary(vocab, False)  # sets what pepper understands
     asr.pause(1)  # restart the ASR engine
-
-    # tablet initialisation
-    url = os.uname()[1] + ":8000/breathe.gif"      # url of the gif
-    tablet.preLoadImage(url)
 
     with open('./script.json') as f:    # load script from the file
         script = jstyleson.load(f)
@@ -54,23 +49,28 @@ def fsm():
         # state specific operations
         if state == '99':           # exit after saying "Goodbye" at final state
             break
-        elif state == '6':          # start of meditation
-            tablet.showImage(url)   # start gif at start of breathing meditation
-            time.sleep(10)          # user follows breathing gif for 10 seconds
-            state = '7'             # move to next state (only one outcome from meditation)
-            continue                # execute loop for state 7, no response needed from user
-        elif state == '7':
-            tablet.hideImage(url)   # hide gif at end of breathing meditation
+        elif state == '6':              # start of meditation
+            for n in range(2):          # breathe in and out twice
+                tts.say("breathe in")
+                for i in [1, 2, 3]:
+                    tts.say(str(i))     # count breathing
+                    time.sleep(1)     # appropriate delay between counting
+                tts.say("and breathe out")
+                for i in [1, 2, 3]:
+                    tts.say(str(i))     # count breathing
+                    time.sleep(0.7)     # appropriate delay between counting
+            state = '7'                 # move to next state (only one outcome from meditation)
+            continue                    # execute loop for state 7, no response needed from user
 
-        time.sleep(5)               # delay to allow user time to reply
+        time.sleep(3)               # delay to allow user time to reply
 
         response = memory.getData("WordRecognized")         # retrieve response
         print('response: ' + str(response) + '\n')
         print('state: ' + state)
 
-        while response[-1] < 0.5 or response == []:         # if pepper is not confident or nothing has been said
+        while response[-1] < 0.2 or response == []:         # if pepper is not confident or nothing has been said
             tts.say("Sorry, I didn't quite catch that")     # ask to repeat, dont change state
-            time.sleep(5)                                   # wait another 5 seconds for response
+            time.sleep(3)                                   # wait another 5 seconds for response
             response = memory.getData("WordRecognized")     # retrieve response again
             print('response: ' + str(response) + '\n')
             print('state: ' + state)
